@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 public class ContactService {
     private final ContactRepo contactRepo;
 
-    public Page<Contact>getAllContacts(int page, int size) {
+    public Page<Contact> getAllContacts(int page, int size) {
         return contactRepo.findAll(PageRequest.of(page, size, Sort.by("name")));
     }
 
