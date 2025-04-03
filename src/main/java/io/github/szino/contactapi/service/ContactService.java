@@ -1,7 +1,7 @@
 package io.github.szino.contactapi.service;
 
 import io.github.szino.contactapi.domain.Contact;
-import io.github.szino.contactapi.repo.ContactRepo;
+import io.github.szino.contactapi.repository.ContactRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,22 +27,22 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 @Transactional(rollbackOn = Exception.class)
 @RequiredArgsConstructor
 public class ContactService {
-    private final ContactRepo contactRepo;
+    private final ContactRepository contactRepository;
 
     public Page<Contact> getAllContacts(int page, int size) {
-        return contactRepo.findAll(PageRequest.of(page, size, Sort.by("name")));
+        return contactRepository.findAll(PageRequest.of(page, size, Sort.by("name")));
     }
 
     public Contact getContact(String id) {
-        return contactRepo.findById(id).orElseThrow(() -> new RuntimeException("Contact not found"));
+        return contactRepository.findById(id).orElseThrow(() -> new RuntimeException("Contact not found"));
     }
 
     public Contact createContact(Contact contact) {
-        return contactRepo.save(contact);
+        return contactRepository.save(contact);
     }
 
     public void deleteContact(String id) {
-        contactRepo.deleteById(id);
+        contactRepository.deleteById(id);
     }
 
     public String uploadPhoto(String id, MultipartFile file) {
@@ -50,7 +50,7 @@ public class ContactService {
         Contact contact = getContact(id);
         String photoUrl = photoFunction.apply(id, file);
         contact.setPhotoUrl(photoUrl);
-        contactRepo.save(contact);
+        contactRepository.save(contact);
         return photoUrl;
     }
 

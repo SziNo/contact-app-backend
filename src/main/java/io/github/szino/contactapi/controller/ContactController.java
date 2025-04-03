@@ -1,4 +1,4 @@
-package io.github.szino.contactapi.resource;
+package io.github.szino.contactapi.controller;
 
 import io.github.szino.contactapi.domain.Contact;
 import io.github.szino.contactapi.service.ContactService;
@@ -20,7 +20,7 @@ import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
 @RestController
 @RequestMapping("/contacts")
 @RequiredArgsConstructor
-public class ContactResource {
+public class ContactController {
     private final ContactService contactService;
 
     @PostMapping
